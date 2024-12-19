@@ -13,7 +13,22 @@ var blid = '3168411090527720'; // Use the correct blid
 var addr = '192.168.1.58'; // Use the correct IP address
 var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Use the correct password
 
-var reconnectAttempts = 0;
+const net = require('net');
+
+function checkRoombaAvailability(ip, callback) {
+    const socket = new net.Socket();
+    socket.setTimeout(3000); // 3 seconds timeout
+
+    socket.on('connect', () => {
+        callback(true);
+        socket.destroy();
+    }).on('error', () => {
+        callback(false);
+    }).on('timeout', () => {
+        callback(false);
+        socket.destroy();
+    }).connect(8883, ip);
+}
 var maxReconnectAttempts = 5;
 var myRobot = new dorita980.Local(blid, pass, addr, { keepAlive: 10000 });
 
@@ -58,5 +73,12 @@ function init() {
         .catch(console.log);
 }
 
-console.log('Attempting to connect...');
-console.log('Please ensure the Roomba is on and connected to the network.');
+checkRoombaAvailability(addr, (isAvailable) => {
+    if (isAvailable) {
+        console.log('Roomba is available on the network. Attempting to connect...');
+        console.log('Please ensure the Roomba is on and connected to the network.');
+        myRobot.connect();
+    } else {
+        console.error('Roomba is not reachable on the network. Please check the IP address and network connection.');
+    }
+});
