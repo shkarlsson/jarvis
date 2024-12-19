@@ -6,7 +6,9 @@ var blid = '3168411090527720'; // Use the correct blid
 var addr = '192.168.1.58'; // Use the correct IP address
 var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Use the correct password
 
-var myRobot = new dorita980.Local(blid, pass, addr);
+var reconnectAttempts = 0;
+var maxReconnectAttempts = 5;
+var myRobot = new dorita980.Local(blid, pass, addr, { keepAlive: 10000 });
 
 
 myRobot.on('connect', () => {
@@ -19,7 +21,13 @@ myRobot.on('disconnect', () => {
 });
 
 myRobot.on('reconnect', () => {
-    console.log('Reconnecting to the robot...');
+    if (reconnectAttempts < maxReconnectAttempts) {
+        reconnectAttempts++;
+        console.log(`Reconnecting to the robot... (Attempt ${reconnectAttempts}/${maxReconnectAttempts})`);
+    } else {
+        console.error('Max reconnect attempts reached. Please check your network and robot settings.');
+        myRobot.end();
+    }
 });
 
 myRobot.on('error', (err) => {
