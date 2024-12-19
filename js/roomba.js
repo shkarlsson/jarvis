@@ -9,10 +9,6 @@ var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Ensure this is the correct passw
 console.log(`Using IP address: ${addr}`);
 console.log(`Using BLID: ${blid}`);
 
-var blid = '3168411090527720'; // Use the correct blid
-var addr = '192.168.1.58'; // Use the correct IP address
-var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Use the correct password
-
 const net = require('net');
 
 function checkRoombaAvailability(ip, callback) {
@@ -31,7 +27,6 @@ function checkRoombaAvailability(ip, callback) {
 }
 var reconnectAttempts = 0;
 var maxReconnectAttempts = 5;
-console.log(`Connecting with BLID: ${blid}, Password: ${pass}, IP: ${addr}`);
 try {
     console.log(`Connecting with BLID: ${blid}, Password: ${pass}, IP: ${addr}`);
     var myRobot = new dorita980.Local(blid, pass, addr, { keepAlive: 10000 });
