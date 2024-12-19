@@ -29,6 +29,19 @@ function init() {
 }
 
 console.log('Attempting to connect...');
+
+myRobot.on('connect', () => {
+    console.log('Connected. Initializing...');
+    init();
+});
+
+myRobot.on('disconnect', () => {
+    console.log('Disconnected from the robot.');
+});
+
+myRobot.on('reconnect', () => {
+    console.log('Reconnecting to the robot...');
+});
 myRobot.on('connect', () => {
     console.log('Connected. Initializing...');
     init();
