@@ -22,6 +22,7 @@ from app.helpers.env_vars import (
     PICOVOICE_ACCESS_KEY as access_key,
     HOTWORD,
     SILENCE_THRESHOLD,
+    MIN_COMMAND_DURATION,
 )
 from app.helpers.ai import transcribe, invoke_ai, generate_audio, parse_ai_response
 
@@ -79,7 +80,6 @@ def say(text):
 # %%
 if __name__ == "__main__":
     silence_duration = 0
-    speech_end_time = None
 
     listen_stream = make_listen_stream()
     print(f"Listening for HOTWORD: {HOTWORD}...")
@@ -92,38 +92,36 @@ if __name__ == "__main__":
         keyword_index = handle.process(pcm)
         if keyword_index >= 0 or force_keyword:
             force_keyword = False
-            # Play a chime
-            # Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=7143">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=7143">Pixabay</a>
 
             threading.Thread(target=play_chime).start()
 
             print("HOTWORD Detected")
-            # listen_stream.stop_stream()
-            # wakeup_word_listen_stream.close()
 
-            start_time = time.time()
+            # start_time = time.time()
 
             frames = b""
             print("Recording command...")
 
+            silence_duration = 0
+            silence_since = time.time()
             while True:
                 time.sleep(0.1)
 
                 data = listen_stream.read(CHUNK, exception_on_overflow=False)
                 frames += data
 
-                if time.time() - start_time < 1:
-                    is_current_speech = True
-                else:
-                    # Convert pcm to bytes before passing to is_speech
-                    last_30_ms = get_last_30_ms(frames)
-                    is_current_speech = vad.is_speech(last_30_ms, SAMPLE_RATE)
+                # if time.time() - start_time < 1:
+                #    is_current_speech = True
+                # else:
+                # Convert pcm to bytes before passing to is_speech
+                last_30_ms = get_last_30_ms(frames)
+                is_current_speech = vad.is_speech(last_30_ms, SAMPLE_RATE)
 
                 if is_current_speech:
                     silence_duration = 0
-                    speech_end_time = time.time()
+                    silence_since = time.time()
                 else:
-                    silence_duration = time.time() - speech_end_time
+                    silence_duration = time.time() - silence_since
 
                 print(f"Silence duration: {silence_duration}")
                 print(f"Message length: {len(frames)}")
@@ -131,6 +129,13 @@ if __name__ == "__main__":
                 # Check if we've reached the silence threshold
                 if silence_duration > SILENCE_THRESHOLD:
                     print("End of speech detected.")
+
+                    if len(frames) < MIN_COMMAND_DURATION * SAMPLE_RATE:
+                        print(
+                            f"Voice recording too short. Restarting the trigger word loop"
+                        )
+                        frames = b""
+                        continue
 
                     # Save the audio to disk, as mp3
                     audio_path = RECORDED_AUDIO_DIR / f"{int(time.time())}.mp3"
@@ -147,6 +152,12 @@ if __name__ == "__main__":
 
                     print(f"Transcribed command: `{command}`")
 
+                    if command.strip() == "":
+                        print(
+                            "No command detected. Breaking out of loop, back to trigger word listening..."
+                        )
+                        break
+
                     if command.lower().strip(". !") in [
                         "exit",
                         "quit",
@@ -159,12 +170,14 @@ if __name__ == "__main__":
                         do_break = True
                         break
 
-                    for text, open_mic in invoke_ai():
+                    for text in invoke_ai():
                         say(text)
-                        if open_mic:
-                            force_keyword = True
-                    print("Restarting the trigger word loop")
-                    break
+
+                    silence_duration = 0
+                    silence_since = time.time()
+                    frames = b""
+                    # print("Restarting the trigger word loop")
+                    print("Listening again (as if hotword was detected)")
 
         if do_break:
             break

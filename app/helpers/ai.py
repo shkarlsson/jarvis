@@ -4,22 +4,20 @@ import json
 
 from openai import OpenAI
 
-from helpers.env_vars import OPENAI_API_KEY, MESSAGE_HISTORY_LENGTH
-from helpers.paths import MESSAGES_DIR
-from helpers.prompts import SYSTEM_PROMPT
+from app.helpers.env_vars import OPENAI_API_KEY, MESSAGE_HISTORY_LENGTH
+from app.helpers.paths import MESSAGES_DIR
+from app.helpers.prompts import SYSTEM_PROMPT
 
-from tools.load import use_tool
+from app.tools.load import use_tool
 
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 
-def save_message(text, role, open_mic=None, tool_name=None, tool_args=None):
+def save_message(text, role, tool_name=None, tool_args=None):
     dt_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     path = MESSAGES_DIR / f"{dt_str}.json"
     message = {"role": role, "content": text}
 
-    if open_mic is not None:
-        message["open_mic"] = open_mic
     if tool_name is not None:
         message["tool_name"] = tool_name
     if tool_args is not None:
@@ -101,16 +99,13 @@ def parse_ai_response(raw_ai_response):
     save_message(
         json_response,
         "assistant",
-        # open_mic=open_mic,
-        # tool=tool,
     )
 
     text = json_response.get("response", "")
-    open_mic = json_response.get("open_mic", False)
     tool = json_response.get("tool_name", None)
     args = json_response.get("tool_args", None)
 
-    yield text, open_mic, tool, args
+    yield text, tool, args
 
 
 # %%
@@ -130,12 +125,12 @@ def invoke_ai():
         max_tokens=1024,
         top_p=1,
     )
-    for text, open_mic, tool_name, tool_args in parse_ai_response(
+    for text, tool_name, tool_args in parse_ai_response(
         response.choices[0].message.content
     ):
 
         if text:
-            yield text, open_mic
+            yield text
 
         if tool_name:
             tool_response = use_tool(tool_name, tool_args)

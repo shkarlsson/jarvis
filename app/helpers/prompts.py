@@ -1,6 +1,6 @@
 import datetime
 
-from tools.load import tool_functions
+from app.tools.load import tool_functions
 
 
 def get_function_parameters_no_library(func):
@@ -35,7 +35,6 @@ now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 response_fmt = """
 {
     "response": str (your message that will be read out loud. Keep it short. Omit if you intend to await the result of a tool call)
-    "open_mic": bool (whether to keep the mic open for the user to respond)
     "tool_name": str (the name of the tool),
     "tool_args": dict (the arguments to pass to the tool)
 }"""
