@@ -1,9 +1,6 @@
 {
-    "scripts": {
-        "roomba": "node js/roomba.js"
-    },
+    "scripts": {},
     "dependencies": {
-        "dorita980": "^3.1.11",
         "python-shell": "^2.0.3"
     }
 }
