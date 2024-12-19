@@ -1,9 +1,10 @@
 var dorita980 = require('dorita980');
+console.log(`dorita980 version: ${require('dorita980/package.json').version}`);
 
 console.log('Starting script...');
-var blid = '3168411090527720'; // Use the correct blid
-var addr = '192.168.1.58'; // Use the correct IP address
-var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Use the correct password
+var blid = '3168411090527720'; // Ensure this is the correct blid
+var addr = '192.168.1.58'; // Ensure this is the correct IP address
+var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Ensure this is the correct password
 
 console.log(`Using IP address: ${addr}`);
 console.log(`Using BLID: ${blid}`);
