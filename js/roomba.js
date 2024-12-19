@@ -29,6 +29,7 @@ function checkRoombaAvailability(ip, callback) {
         socket.destroy();
     }).connect(8883, ip);
 }
+var reconnectAttempts = 0;
 var maxReconnectAttempts = 5;
 var myRobot = new dorita980.Local(blid, pass, addr, { keepAlive: 10000 });
 
