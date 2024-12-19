@@ -8,6 +8,10 @@ var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'; // Use the correct password
 
 var myRobot = new dorita980.Local(blid, pass, addr);
 
+myRobot.on('state', (state) => {
+    console.log('Current state:', state);
+});
+
 
 myRobot.on('error', (err) => {
     console.error('Error:', err);
