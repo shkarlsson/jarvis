@@ -12,6 +12,10 @@ myRobot.on('state', (state) => {
     console.log('Current state:', state);
 });
 
+myRobot.on('state', (state) => {
+    console.log('Current state:', state);
+});
+
 
 myRobot.on('error', (err) => {
     console.error('Error:', err);
