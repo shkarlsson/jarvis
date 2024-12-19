@@ -1,0 +1,8 @@
+.env
+.venv*
+.credentials
+.DS_Store
+__pycache__
+data
+.aider*
+node_modules
