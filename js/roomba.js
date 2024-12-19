@@ -32,6 +32,7 @@ function checkRoombaAvailability(ip, callback) {
 var reconnectAttempts = 0;
 var maxReconnectAttempts = 5;
 console.log(`Connecting with BLID: ${blid}, Password: ${pass}, IP: ${addr}`);
+console.log(`Connecting with BLID: ${blid}, Password: ${pass}, IP: ${addr}`);
 var myRobot = new dorita980.Local(blid, pass, addr, { keepAlive: 10000 });
 
 
