@@ -1,6 +1,8 @@
 var dorita980 = require('dorita980');
 
 console.log('Starting script...');
+console.log(`Using IP address: ${addr}`);
+console.log(`Using BLID: ${blid}`);
 
 var blid = '3168411090527720'; // Use the correct blid
 var addr = '192.168.1.58'; // Use the correct IP address
@@ -52,3 +54,4 @@ function init() {
 }
 
 console.log('Attempting to connect...');
+console.log('Please ensure the Roomba is on and connected to the network.');
