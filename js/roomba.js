@@ -15,7 +15,16 @@ var pass = ':1:1718021841:2HZDmiuF2noI4Ypk'
 var myRobot = new dorita980.Local(blid, pass, addr);
 
 
-myRobot.on('error', (err) => console.error('Error:', err));
+myRobot.on('error', (err) => {
+    console.error('Error:', err);
+    if (err.message.includes('EHOSTUNREACH')) {
+        console.error('Host unreachable. Please check the IP address and network connection.');
+    } else if (err.message.includes('ECONNREFUSED')) {
+        console.error('Connection refused. Please check if the Roomba is on and connected to the network.');
+    } else {
+        console.error('An unexpected error occurred:', err.message);
+    }
+});
 
 
 function init() {
