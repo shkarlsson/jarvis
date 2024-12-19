@@ -77,7 +77,6 @@ checkRoombaAvailability(addr, (isAvailable) => {
     if (isAvailable) {
         console.log('Roomba is available on the network. Attempting to connect...');
         console.log('Please ensure the Roomba is on and connected to the network.');
-        myRobot.connect();
     } else {
         console.error('Roomba is not reachable on the network. Please check the IP address and network connection.');
     }
