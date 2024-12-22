@@ -19,16 +19,16 @@ from app.helpers.paths import (
     CHIME_PATH,
     MESSAGES_DIR,
 )
+from app-helper-config import config
 from app.helpers.env_vars import (
     SILENCE_THRESHOLD,
     MIN_COMMAND_DURATION,
     PICOVOICE_ACCESS_KEY as access_key,
-    HOTWORD,
 )
 from app.helpers.ai import transcribe, invoke_ai, generate_audio, parse_ai_response
 
 
-handle = pvporcupine.create(access_key=access_key, keywords=[HOTWORD])
+handle = pvporcupine.create(access_key=access_key, keywords=[config.HOTWORD])
 
 FORMAT = pyaudio.paInt16
 SAMPLE_RATE = handle.sample_rate
