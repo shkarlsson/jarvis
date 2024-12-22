@@ -1,5 +1,6 @@
 # %%
 import time
+import re
 import threading
 import json
 
@@ -153,7 +154,7 @@ if __name__ == "__main__":
 
                     print(f"Transcribed command: `{command}`")
 
-                    if not any(char.isalnum() for char in command):
+                    if not re.search(r'\w', command):
                         print(
                             "No command detected. Breaking out of loop, back to trigger word listening..."
                         )
