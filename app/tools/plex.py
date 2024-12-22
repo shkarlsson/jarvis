@@ -1,5 +1,6 @@
 # %%
 import json
+import yaml
 from plexapi.myplex import MyPlexAccount
 
 # Get plex token by
@@ -12,7 +13,10 @@ from plexapi.server import PlexServer
 
 from app.helpers.env_vars import PLEX_TOKEN
 
-BASE_URL = "http://192.168.1.5:32400"
+with open("config.yaml", "r") as config_file:
+    config = yaml.safe_load(config_file)
+
+BASE_URL = config["PLEX_SERVER_URL"]
 plex = PlexServer(BASE_URL, PLEX_TOKEN)
 
 
