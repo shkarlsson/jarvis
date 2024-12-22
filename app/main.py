@@ -19,7 +19,7 @@ from app.helpers.paths import (
     CHIME_PATH,
     MESSAGES_DIR,
 )
-from app-helper-config import config
+from app_helper_config import config
 from app.helpers.env_vars import (
     SILENCE_THRESHOLD,
     MIN_COMMAND_DURATION,
