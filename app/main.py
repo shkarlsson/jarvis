@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
                     print(f"Transcribed command: `{command}`")
 
-                    if command.strip() == "":
+                    if not any(char.isalnum() for char in command):
                         print(
                             "No command detected. Breaking out of loop, back to trigger word listening..."
                         )
