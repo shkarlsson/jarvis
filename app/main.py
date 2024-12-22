@@ -84,7 +84,7 @@ if __name__ == "__main__":
     print(f"SILENCE_THRESHOLD: {SILENCE_THRESHOLD}, MIN_COMMAND_DURATION: {MIN_COMMAND_DURATION}")
 
     listen_stream = make_listen_stream()
-    print(f"Listening for HOTWORD: {HOTWORD}...")
+    print(f"Listening for HOTWORD: {config.HOTWORD}...")
     do_break = False
     force_keyword = False
     while True:
