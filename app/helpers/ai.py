@@ -113,7 +113,7 @@ def parse_ai_response(raw_ai_response):
 
 def invoke_ai():
     response = openai_client.chat.completions.create(
-        model="gpt-4o",
+        model=config.MODEL_NAME,
         messages=[
             {
                 "role": "system",
