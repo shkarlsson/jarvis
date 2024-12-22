@@ -1,3 +1,15 @@
 pyyaml==6.0.2
 plexapi
 paho-mqtt
+openai
+gkeepapi
+pydub
+webrtcvad
+tqdm
+streamlit
+streamlit-webrtc
+pyaudio
+requests
+elasticsearch
+pvporcupine
+python-dotenv
