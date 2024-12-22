@@ -4,7 +4,7 @@ import json
 
 from openai import OpenAI
 
-from app.helpers.env_vars import OPENAI_API_KEY, MESSAGE_HISTORY_LENGTH
+from app.helpers.env_vars import OPENAI_API_KEY
 from app.helpers.paths import MESSAGES_DIR
 from app.helpers.prompts import SYSTEM_PROMPT
 from app.helpers.config import config
@@ -34,7 +34,7 @@ def load_messages():
     messages = []
 
     for path in sorted(MESSAGES_DIR.glob("*.json"), key=lambda x: x.name)[
-        -MESSAGE_HISTORY_LENGTH:
+        -config.MESSAGE_HISTORY_LENGTH:
     ]:
         with open(path, "r") as f:
             message = json.load(f)
