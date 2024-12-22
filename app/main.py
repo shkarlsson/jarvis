@@ -19,6 +19,8 @@ from app.helpers.paths import (
     MESSAGES_DIR,
 )
 from app.helpers.env_vars import (
+    SILENCE_THRESHOLD,
+    MIN_COMMAND_DURATION,
     PICOVOICE_ACCESS_KEY as access_key,
     HOTWORD,
 )
