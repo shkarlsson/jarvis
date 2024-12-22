@@ -7,6 +7,7 @@ from openai import OpenAI
 from app.helpers.env_vars import OPENAI_API_KEY, MESSAGE_HISTORY_LENGTH
 from app.helpers.paths import MESSAGES_DIR
 from app.helpers.prompts import SYSTEM_PROMPT
+from app.helpers.config import config
 
 from app.tools.load import use_tool
 
