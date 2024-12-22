@@ -6,4 +6,4 @@ SILENCE_THRESHOLD: 2 # seconds of silence before listening stops and audio is se
 MIN_COMMAND_DURATION: 1
 
 MODEL_NAME: gpt-4o
-MESSAGE_HISTORY_LENGTH: 10
+MESSAGE_HISTORY_LENGTH: 10 # Number of messages to keep in memory. More messages means more context and conversation history for the AI to work with, but also more costly API calls.
