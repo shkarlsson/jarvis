@@ -11,12 +11,12 @@ from plexapi.myplex import MyPlexAccount
 
 from plexapi.server import PlexServer
 
-from app.helpers.env_vars import PLEX_TOKEN
+from app.helpers.env_vars import PLEX_TOKEN, PLEX_SERVER_URL
 
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
-BASE_URL = config["PLEX_SERVER_URL"]
+BASE_URL = PLEX_SERVER_URL
 plex = PlexServer(BASE_URL, PLEX_TOKEN)
 
 
