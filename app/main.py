@@ -127,7 +127,7 @@ if __name__ == "__main__":
                 print(f"Message length: {len(frames)}")
 
                 # Check if we've reached the silence threshold
-                if silence_duration > SILENCE_THRESHOLD:
+                if silence_duration > config.SILENCE_THRESHOLD:
                     print("End of speech detected.")
 
                     if len(frames) < config.MIN_COMMAND_DURATION * SAMPLE_RATE:
