@@ -43,6 +43,9 @@ def try_all_conversions(value):
     return value
 
 
+SILENCE_THRESHOLD = try_float_conversion(os.getenv("SILENCE_THRESHOLD", "1.0"))
+MIN_COMMAND_DURATION = try_float_conversion(os.getenv("MIN_COMMAND_DURATION", "1.0"))
+
 env_var = {key: try_all_conversions(value) for key, value in os.environ.items()}
 
 globals().update(env_var)

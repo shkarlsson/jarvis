@@ -21,8 +21,6 @@ from app.helpers.paths import (
 from app.helpers.env_vars import (
     PICOVOICE_ACCESS_KEY as access_key,
     HOTWORD,
-    SILENCE_THRESHOLD,
-    MIN_COMMAND_DURATION,
 )
 from app.helpers.ai import transcribe, invoke_ai, generate_audio, parse_ai_response
 
@@ -80,6 +78,7 @@ def say(text):
 # %%
 if __name__ == "__main__":
     silence_duration = 0
+    print(f"SILENCE_THRESHOLD: {SILENCE_THRESHOLD}, MIN_COMMAND_DURATION: {MIN_COMMAND_DURATION}")
 
     listen_stream = make_listen_stream()
     print(f"Listening for HOTWORD: {HOTWORD}...")
