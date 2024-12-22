@@ -1,9 +1,15 @@
-PLEX_SERVER_URL: "http://192.168.1.5:32400"
+# -----------------
+# Voice activation
+# -----------------
 
 HOTWORD: jarvis # Valid options: alexa, americano, blueberry, bumblebee, computer, grapefruit, grasshopper, hey barista, hey google, hey siri, jarvis, ok google, pico clock, picovoice, porcupine, smart mirror, snowboy, terminator, view glass
 
 SILENCE_THRESHOLD: 2 # seconds of silence before listening stops and audio is sent to transcription API
 MIN_COMMAND_DURATION: 1
+
+# -----------------
+# AI
+# -----------------
 
 MODEL_NAME: gpt-4o
 MESSAGE_HISTORY_LENGTH: 10 # Number of messages to keep in memory. More messages means more context and conversation history for the AI to work with, but also more costly API calls.
