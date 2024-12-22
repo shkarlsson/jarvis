@@ -21,8 +21,6 @@ from app.helpers.paths import (
 )
 from app.helpers.config import config
 from app.helpers.env_vars import (
-    SILENCE_THRESHOLD,
-    MIN_COMMAND_DURATION,
     PICOVOICE_ACCESS_KEY as access_key,
 )
 from app.helpers.ai import transcribe, invoke_ai, generate_audio, parse_ai_response
@@ -81,7 +79,7 @@ def say(text):
 # %%
 if __name__ == "__main__":
     silence_duration = 0
-    print(f"SILENCE_THRESHOLD: {SILENCE_THRESHOLD}, MIN_COMMAND_DURATION: {MIN_COMMAND_DURATION}")
+    print(f"SILENCE_THRESHOLD: {config.SILENCE_THRESHOLD}, MIN_COMMAND_DURATION: {config.MIN_COMMAND_DURATION}")
 
     listen_stream = make_listen_stream()
     print(f"Listening for HOTWORD: {config.HOTWORD}...")
@@ -132,7 +130,7 @@ if __name__ == "__main__":
                 if silence_duration > SILENCE_THRESHOLD:
                     print("End of speech detected.")
 
-                    if len(frames) < MIN_COMMAND_DURATION * SAMPLE_RATE:
+                    if len(frames) < config.MIN_COMMAND_DURATION * SAMPLE_RATE:
                         print(
                             f"Voice recording too short. Restarting the trigger word loop"
                         )
