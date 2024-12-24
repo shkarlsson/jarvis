@@ -30,7 +30,7 @@ def get_current_weather():
         return weather_info
     else:
         return {
-            "error": f"Failed to get current weather data. Error code: {response.status_code}"
+            "error": f"Failed to get current weather data. Error code: {response.status_code} Error message: {response.text}"
         }
 
 
@@ -70,7 +70,7 @@ def get_forecast_weather(days=1):
         return forecasts
     else:
         return {
-            "error": f"Failed to get forecast data. Error code: {response.status_code}"
+            "error": f"Failed to get forecast data. Error code: {response.status_code}. Error message: {response.text}"
         }
 
 
@@ -87,12 +87,12 @@ def test_weather_tool():
     try:
         current_weather = get_weather(0)
         if "error" in current_weather:
-            print("Error getting current weather")
+            print(current_weather["error"])
             return False
 
         forecast_weather = get_weather(1)
         if "error" in forecast_weather:
-            print("Error getting forecast weather")
+            print(forecast_weather["error"])
             return False
 
         return True

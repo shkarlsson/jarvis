@@ -53,12 +53,15 @@ tool_functions_config = {
 }
 
 tool_functions = {}
-
+skipped_tools = []
 for name, config in tool_functions_config.items():
     if not config["dependency"]:
-        print(f"Skipping tool '{name}'. Test failed.")
+        skipped_tools.append(name)
         continue
     tool_functions[name] = config["function"]
+
+if skipped_tools:
+    print(f"Skipped tools:\n- {'\n- '.join(skipped_tools)}")
 
 
 def use_tool(name, args=None):
