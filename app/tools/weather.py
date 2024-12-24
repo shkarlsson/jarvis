@@ -1,15 +1,15 @@
 # %%
 import requests
-from app.helpers.env_vars import OPEN_WEATHER_API_KEY
+from app.helpers.env_vars import OPEN_WEATHER_API_KEY, WEATHER_LOCATION
 import json
 
 # %%
 
 
-def get_current_weather(location="Stockholm"):
+def get_current_weather():
     current_weather_base_url = "http://api.openweathermap.org/data/2.5/weather"
     # Parameters for current weather
-    params = {"q": location, "appid": OPEN_WEATHER_API_KEY, "units": "metric"}
+    params = {"q": WEATHER_LOCATION, "appid": OPEN_WEATHER_API_KEY, "units": "metric"}
 
     response = requests.get(current_weather_base_url, params=params)
 
@@ -34,12 +34,12 @@ def get_current_weather(location="Stockholm"):
         }
 
 
-def get_forecast_weather(location="Stockholm", days=1):
+def get_forecast_weather(days=1):
     forecast_base_url = "http://api.openweathermap.org/data/2.5/forecast"
 
     # Parameters for forecast weather
     params = {
-        "q": location,
+        "q": WEATHER_LOCATION,
         "appid": OPEN_WEATHER_API_KEY,
         "units": "metric",
         "cnt": days * 8,  # 8 data points per day (every 3 hours)
@@ -76,12 +76,11 @@ def get_forecast_weather(location="Stockholm", days=1):
 
 def get_weather(n):
     """Returns the weather data for the current location. If n is 0, it returns the current weather. Otherwise, it returns the forecast for n days ahead."""
-    location = "Stockholm"
     if n == 0:
-        return get_current_weather(location)
+        return get_current_weather()
 
     else:
-        return get_forecast_weather(location, n)
+        return get_forecast_weather(n)
 
 
 # %%

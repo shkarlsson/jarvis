@@ -8,15 +8,19 @@ from difflib import get_close_matches
 from app.helpers.paths import APP_DIR
 from app.helpers.env_vars import GOOGLE_TOKEN as master_token, SHOPPING_LIST_TITLE
 
-keep = gkeepapi.Keep()
-success = keep.authenticate("", master_token)
+
+def connect_to_keep():
+    keep = gkeepapi.Keep()
+    success = keep.authenticate("", master_token)
+    return keep, success
 
 
 # %%
 
 
-def get_note_by_title(title):
-    note = next((n for n in keep.all() if n.title == title), None)
+def get_note_by_title(keep):
+
+    note = next((n for n in keep.all() if n.title == SHOPPING_LIST_TITLE), None)
     if note is None:
         print(f"Note '{title}' not found.")
 
@@ -24,8 +28,9 @@ def get_note_by_title(title):
 
 
 def add_to_shopping_list(items):
+    keep, success = connect_to_keep()
     """Add items to the shopping list (separate several items with commas)"""
-    note = get_note_by_title(SHOPPING_LIST_TITLE)
+    note = get_note_by_title(keep)
     if note is None:
         return
 
@@ -44,7 +49,8 @@ def add_to_shopping_list(items):
 
 def check_shopping_list():
     """Check the items on the shopping list"""
-    note = get_note_by_title(SHOPPING_LIST_TITLE)
+    keep, success = connect_to_keep()
+    note = get_note_by_title(keep)
     if note is None:
         return
 
@@ -56,7 +62,8 @@ def check_shopping_list():
 
 def remove_from_shopping_list(remaining_items):
     """Remove items from the shopping list (separate several items with commas)"""
-    note = get_note_by_title(SHOPPING_LIST_TITLE)
+    keep, success = connect_to_keep()
+    note = get_note_by_title(keep)
     if note is None:
         return "Couldn't get the list. 🤔"
 
