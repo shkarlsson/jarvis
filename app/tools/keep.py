@@ -22,7 +22,7 @@ def get_note_by_title(keep):
 
     note = next((n for n in keep.all() if n.title == SHOPPING_LIST_TITLE), None)
     if note is None:
-        print(f"Note '{title}' not found.")
+        print(f"Note '{SHOPPING_LIST_TITLE}' not found.")
 
     return note
 
@@ -55,9 +55,6 @@ def check_shopping_list():
         return
 
     return [item.text for item in note.items if not item.checked]
-
-
-# %%
 
 
 def remove_from_shopping_list(remaining_items):
@@ -93,7 +90,6 @@ def remove_from_shopping_list(remaining_items):
         if close_matches:
             item_to_remove = close_matches[0]
             note_item.checked = True
-            print(f"Checked item: {note_item.text}")
             remaining_items.remove(item_to_remove)
             deleted_items.append(note_item.text)
 
@@ -103,3 +99,23 @@ def remove_from_shopping_list(remaining_items):
         "deleted": deleted_items,
         "not_found": remaining_items,
     }
+
+
+def test_shopping_list_tools():
+    test_str = (
+        "Test1639343"  # Should be capitalized because it is how it is added to the list
+    )
+    try:
+        add_to_shopping_list([test_str])
+
+        if test_str not in check_shopping_list():
+            print("Error adding item to shopping list")
+            return False
+        remove_from_shopping_list([test_str])
+        if test_str in check_shopping_list():
+            print("Error removing item from shopping list")
+            return False
+        return True
+    except Exception as e:
+        print(f"Error testing shopping list tools: {e}")
+        return False

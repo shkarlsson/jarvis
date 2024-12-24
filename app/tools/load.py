@@ -1,32 +1,63 @@
-import random
-
 from app.tools.keep import (
     add_to_shopping_list,
     check_shopping_list,
     remove_from_shopping_list,
+    test_shopping_list_tools,
 )
 from app.tools.timer import set_timer, get_timers, cancel_timer
 from app.tools.weather import get_weather
 from app.tools.es import get_zigbee_device_names
+from app.tools.random_number import generate_random_number
 
 
-def random_number(x, y):
-    """Generate a random number between x and y, inclusive."""
-    return random.randint(x, y)
-
+shopping_list_test_results = test_shopping_list_tools()
 
 # Mapping of function names to functions
-tool_functions = {
-    "add_to_shopping_list": add_to_shopping_list,
-    "check_shopping_list": check_shopping_list,
-    "remove_from_shopping_list": remove_from_shopping_list,
-    "set_timer": set_timer,
-    "get_timers": get_timers,
-    "cancel_timer": cancel_timer,
-    "random_number": random_number,
-    "get_weather": get_weather,
-    "get_zigbee_device_names": get_zigbee_device_names,
+tool_functions_config = {
+    "add_to_shopping_list": {
+        "function": add_to_shopping_list,
+        "dependency": shopping_list_test_results,
+    },
+    "check_shopping_list": {
+        "function": check_shopping_list,
+        "dependency": shopping_list_test_results,
+    },
+    "remove_from_shopping_list": {
+        "function": remove_from_shopping_list,
+        "dependency": shopping_list_test_results,
+    },
+    "set_timer": {
+        "function": set_timer,
+        "dependency": True,
+    },
+    "get_timers": {
+        "function": get_timers,
+        "dependency": True,
+    },
+    "cancel_timer": {
+        "function": cancel_timer,
+        "dependency": True,
+    },
+    "generate_random_number": {
+        "function": generate_random_number,
+        "dependency": True,
+    },
+    "get_weather": {
+        "function": get_weather,
+        "dependency": True,
+    },
+    "get_zigbee_device_names": {
+        "function": get_zigbee_device_names,
+        "dependency": True,
+    },
 }
+tool_functions = {}
+
+for name, config in tool_functions_config.items():
+    if not config["dependency"]:
+        print(f"Skipping tool '{name}'. Test failed.")
+        continue
+    tool_functions[name] = config["function"]
 
 
 def use_tool(name, args=None):

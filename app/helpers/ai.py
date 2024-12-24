@@ -47,7 +47,6 @@ def load_messages():
             if cleaned["content"] is None:
                 cleaned["content"] = ""
 
-            # If content is an integer or float, convert it to a string
             if isinstance(cleaned["content"], (int, float)):
                 cleaned["content"] = str(cleaned["content"])
 
