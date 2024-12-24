@@ -34,7 +34,7 @@ def load_messages():
     messages = []
 
     for path in sorted(MESSAGES_DIR.glob("*.json"), key=lambda x: x.name)[
-        -config.MESSAGE_HISTORY_LENGTH:
+        -config.MESSAGE_HISTORY_LENGTH :
     ]:
         with open(path, "r") as f:
             message = json.load(f)
@@ -46,6 +46,10 @@ def load_messages():
             }
             if cleaned["content"] is None:
                 cleaned["content"] = ""
+
+            # If content is an integer or float, convert it to a string
+            if isinstance(cleaned["content"], (int, float)):
+                cleaned["content"] = str(cleaned["content"])
 
             if isinstance(cleaned["content"], (list, dict)):
                 cleaned["content"] = json.dumps(cleaned["content"])
