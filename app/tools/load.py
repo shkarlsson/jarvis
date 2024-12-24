@@ -61,7 +61,8 @@ for name, config in tool_functions_config.items():
     tool_functions[name] = config["function"]
 
 if skipped_tools:
-    print(f"Skipped tools:\n- {'\n- '.join(skipped_tools)}")
+    skipped_tools_str = "\n- ".join(skipped_tools)
+    print(f"Skipped tools:\n- {skipped_tools_str}")
 
 
 def use_tool(name, args=None):
