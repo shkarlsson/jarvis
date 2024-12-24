@@ -3,6 +3,8 @@
 import gkeepapi
 import json
 
+from difflib import get_close_matches
+
 from app.helpers.paths import APP_DIR
 from app.helpers.env_vars import GOOGLE_TOKEN as master_token, SHOPPING_LIST_TITLE
 
@@ -50,8 +52,6 @@ def check_shopping_list():
 
 
 # %%
-
-from difflib import get_close_matches
 
 
 def remove_from_shopping_list(remaining_items):
