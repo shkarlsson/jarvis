@@ -22,6 +22,7 @@ Jarvis is an attempt at a replacement for Google Home, Siri and Alexa but with g
 - [ ] Music with Plex
 - [/] Timer
 - [ ] Zigbee control
+- [ ] Public Transit
 
 ### QoL
 
