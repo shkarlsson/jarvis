@@ -5,13 +5,13 @@ from app.tools.keep import (
     test_shopping_list_tools,
 )
 from app.tools.timer import set_timer, get_timers, cancel_timer
-from app.tools.weather import get_weather
+from app.tools.weather import get_weather, test_weather_tool
 from app.tools.es import get_zigbee_device_names
 from app.tools.random_number import generate_random_number
 
 
 shopping_list_test_results = test_shopping_list_tools()
-
+weather_test_results = test_weather_tool()
 # Mapping of function names to functions
 tool_functions_config = {
     "add_to_shopping_list": {
@@ -44,13 +44,14 @@ tool_functions_config = {
     },
     "get_weather": {
         "function": get_weather,
-        "dependency": True,
+        "dependency": weather_test_results,
     },
     "get_zigbee_device_names": {
         "function": get_zigbee_device_names,
-        "dependency": True,
+        "dependency": weather_test_results,
     },
 }
+
 tool_functions = {}
 
 for name, config in tool_functions_config.items():

@@ -83,4 +83,22 @@ def get_weather(n):
         return get_forecast_weather(n)
 
 
+def test_weather_tool():
+    try:
+        current_weather = get_weather(0)
+        if "error" in current_weather:
+            print("Error getting current weather")
+            return False
+
+        forecast_weather = get_weather(1)
+        if "error" in forecast_weather:
+            print("Error getting forecast weather")
+            return False
+
+        return True
+    except Exception as e:
+        print(f"Error testing weather tool: {e}")
+        return False
+
+
 # %%
